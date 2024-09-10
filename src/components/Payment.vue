@@ -39,12 +39,13 @@ export default {
             // Reset errori
             this.resetErrors();
 
-            // validazione email
+            // Validazione email
             if (!this.emailValidator(this.email)) {
                 // messaggio d'errore
                 this.errori = true;
             }
-
+            
+            // Validazione indirizzo
             if (!this.addressValidator(this.address)) {
                 // messaggio d'errore
             }
@@ -114,10 +115,7 @@ export default {
             //     element.remove();
             // })
             // email.style.border = '';
-            // password.style.border = '';
-            // password_confirmation.style.border = '';
-            // tax_id.style.border = '';
-            // restaurantAddress.style.border = '';
+            // address.style.border = '';
             this.errori = false;
         }
     }
@@ -179,7 +177,7 @@ export default {
 </script>
 
 <template>
-    <form id="payment-form" action="http://localhost:8000/api/checkout" method="post" ref="form">
+    <form id="payment-form" action="http://localhost:8000/api/checkout" method="post" ref="form" @submit="checkOnSubmit">
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
