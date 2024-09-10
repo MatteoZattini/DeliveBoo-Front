@@ -10,7 +10,13 @@ export default {
         return {
             token: null,
             dropinInstance: null,
-            store: store
+            store: store,
+            email: '',
+            address: '',
+            postalcode: '',
+            phone: '',
+            alfanumerici: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+            errori: false
         }
     },
     methods: {
@@ -27,6 +33,92 @@ export default {
                 // console.log(this.cart[i].price, sum);
             }
             return sum.toFixed(2);
+        },
+        checkOnSubmit(event) {
+
+            // Reset errori
+            this.resetErrors();
+
+            // validazione email
+            if (!this.emailValidator(this.email)) {
+                // messaggio d'errore
+                this.errori = true;
+            }
+
+            if (!this.addressValidator(this.address)) {
+                // messaggio d'errore
+            }
+
+            // Se ci sono errori allora previeni l'invio del form
+            if (this.errori) {
+                event.preventDefault();
+            }
+        },
+        emailValidator(email) {
+
+            // Controlla se contiene il . e la @
+            if (!email.includes("@") || !email.includes(".")) {
+                return false;
+            }
+            // Controlla che ci sia un solo "@" e che sia in una posizione valida
+            const atIndex = email.indexOf('@');
+            if (atIndex === -1 || atIndex !== email.lastIndexOf('@')) {
+                return false
+            }
+            // Controlla che ci sia un punto dopo "@" e che non sia l'ultimo carattere
+            const dotIndex = email.indexOf(".", atIndex);
+            if (dotIndex === -1 || dotIndex === email.length - 1) {
+                return false;
+            }
+            // Controlla che il primo e l'ultimo carattere siano alfanumerici
+            if (!this.alfanumerici.includes(email[0]) || !this.alfanumerici.includes(email[email.length - 1])) {
+                return false
+            }
+            // Controlla che non ci siano spazi bianchi
+            if (email.includes(' ')) {
+                return false
+            }
+            // Controlla che non ci siano ".." o ".@" o "@."
+            if (email.includes("..") || email.includes(".@") || email.includes("@.")) {
+                return false;
+            }
+            // Se tutti i controlli passano, l'email è valida
+            return true
+
+        },
+        addressValidator(address) {
+
+            address = address.trim();
+            // Controlla se l'indirizzo è vuoto
+            if (address.length === 0) {
+                return false;
+            }
+
+            // Controlla la lunghezza minima dell'indirizzo
+            if (address.length < 10) {
+                return false;
+            }
+
+            // Controlla la presenza di numeri nell'indirizzo
+            const hasNumber = /\d/.test(address);
+            if (!hasNumber) {
+                return false;
+            }
+
+            // Se tutte le validazioni passano
+            return true;
+        },
+        resetErrors() {
+            // errorClientMessage = document.querySelectorAll('.errorClientMessage');
+            // errorClientMessage.forEach((element) => {
+            //     element.remove();
+            // })
+            // email.style.border = '';
+            // password.style.border = '';
+            // password_confirmation.style.border = '';
+            // tax_id.style.border = '';
+            // restaurantAddress.style.border = '';
+            this.errori = false;
         }
     }
     ,
@@ -92,7 +184,7 @@ export default {
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
                     <h1 class="mb-4">Totale: {{ getTotalPrice() }}€</h1>
-                    
+
                     <!-- Email Address -->
                     <div class="mb-3">
                         <label for="email" class="form-label">Indirizzo Email<span class="text-danger">*</span></label>
@@ -128,7 +220,8 @@ export default {
                     <div class="row">
                         <!-- Postal Code -->
                         <div class="col-md-4 mb-3">
-                            <label for="postalcode" class="form-label">Codice Postale<span class="text-danger">*</span></label>
+                            <label for="postalcode" class="form-label">Codice Postale<span
+                                    class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="postalcode" name="postalcode" required>
                         </div>
 
@@ -165,7 +258,6 @@ export default {
 </template>
 
 <style scoped>
-
 #payment-form {
     margin-top: 5rem;
 }
@@ -175,4 +267,3 @@ export default {
     width: 100%;
 }
 </style>
-
