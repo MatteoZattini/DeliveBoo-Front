@@ -27,9 +27,13 @@ export default {
         currentRoute() {
             console.log("questa è", this.$route.path)
             return this.$route.path;
+        },
 
-            
-        }
+        // mycurrentRoute() {
+        //     if(this.$route.path.startsWith("/restaurant/")) {
+        //         console.log("questa rotta è un ristorante")
+        //     }
+        // },
 
 
 
@@ -45,6 +49,8 @@ export default {
         console.log(store.getCart(), 'cart')
 
         this.currentRoute()
+
+        // this.mycurrentRoute()
 
     }
 

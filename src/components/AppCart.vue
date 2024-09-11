@@ -49,7 +49,6 @@ export default {
         currentRoute() {
             if(this.$route.path.startsWith("/restaurant/")) {
                 console.log("questa rotta è un ristorante")
-                return this.myOffcanvas.simulateClick()
             }
         }
 
