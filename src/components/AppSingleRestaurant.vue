@@ -14,14 +14,24 @@ export default {
     data() {
         return {
             restaurant: '',
-            isLoading: true
+            isLoading: true,
+            offcanvas: '',
         }
     },
 
     methods: {
         handleAddToCart(dish) {
             store.addToCart(dish);
+        },
+
+        currentRoute() {
+            console.log("questa è", this.$route.path)
+            return this.$route.path;
+
+            
         }
+
+
 
     },
 
@@ -32,8 +42,15 @@ export default {
             console.log(this.restaurant);
             this.isLoading = false
         });
-        console.log(store.getCart(), 'cart');
+        console.log(store.getCart(), 'cart')
+
+        this.currentRoute()
+
     }
+
+
+    
+    
 }
 </script>
 
@@ -48,7 +65,7 @@ export default {
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="menu-items d-flex flex-wrap justify-content-center">
                         <template v-if="!isLoading">
                             <div class="menu-item me-3 ms-3 mb-4" v-for="dish in restaurant.dishes" :key="dish.id">
@@ -63,7 +80,7 @@ export default {
                         </template>
                         <template v-else>
                             <div class="d-flex flex-wrap justify-content-center">
-                                <Skeleton shape="square" size="22.5rem" class="ms-2 mb-4" v-for="x in 3" :key="x"></Skeleton>
+                                <Skeleton shape="square" size="22.5rem" class="ms-2 mb-4" v-for="x in 2" :key="x"></Skeleton>
                             </div>
                         </template>
                     </div>
@@ -75,8 +92,9 @@ export default {
 <style scoped>
 .menu-section {
     text-align: center;
+    height: 100%;
     padding: 50px 0;
-    background-color: #f8f8f8;
+    /* background-color: #f8f8f8; */
 }
 
 .title-section {

@@ -20,7 +20,8 @@ export default {
       restaurants: [],
       isLoading: true,
       notFound: false,
-      totalRestaurants: 0 // Numero totale di ristoranti
+      totalRestaurants: 0, // Numero totale di ristoranti
+      myOffcanvas: this.$refs.offCanvas,
     };
   },
   methods: {
@@ -45,6 +46,11 @@ export default {
     handleEmit(categoriesSelected) {
       this.categoriesSelected = categoriesSelected;
       this.getRestaurants();
+    },
+
+    openOffcanvas() {
+      // this.myOffcanvas.click()
+      console.log("aperta offcanvas")
     }
   },
   mounted() {
@@ -66,7 +72,7 @@ export default {
         <div class="col-12 d-flex justify-content-center flex-wrap">
           <div v-if="!isLoading && restaurants.length" class="d-flex flex-wrap justify-content-center">
             <template v-for="restaurant in restaurants" :key="restaurant.id">
-              <router-link class="btn" :to="{ name: 'single-restaurant', params: { slug: restaurant.slug } }">
+              <router-link @click="openOffcanvas()" class="btn" :to="{ name: 'single-restaurant', params: { slug: restaurant.slug } }">
                 <RestaurantCard :imageSrc="restaurant.img" :restaurantName="restaurant.name" :restaurant="restaurant" />
               </router-link>
             </template>

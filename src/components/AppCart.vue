@@ -11,6 +11,7 @@ export default {
     data() {
         return {
             cart: store.getCart(),
+            myOffcanvas: document.getElementById("offcanvasScrolling"),
         }
     },
 
@@ -43,17 +44,28 @@ export default {
         },
         handleUpdateQuantity(itemid, quantity) {
             store.updateQuantity(itemid, quantity);
+        },
+
+        currentRoute() {
+            if(this.$route.path.startsWith("/restaurant/")) {
+                console.log("questa rotta è un ristorante")
+                return this.myOffcanvas.simulateClick()
+            }
         }
 
     },
     computed: {
         totalPrice() {
             return this.getTotalPrice(); // Chiamata alla funzione all'interno del computed
-        }
+        },
+
+        
+
     },
 
     mounted() {
         // console.log(store.getCart(), 'cart');
+        this.currentRoute()
     }
 }
 </script>
@@ -63,7 +75,7 @@ export default {
 
 <template>
     <!-- DATI CONTENENTI IL CARRELLO -->
-    <div class="offcanvas bg-dark text-white offcanvas-end " data-bs-scroll="true" data-bs-backdrop="false"
+    <div class="offcanvas bg-dark text-white offcanvas-end" ref="offCanvas" data-bs-scroll="true" data-bs-backdrop="false"
         tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
             <h5 v-if="handleGetCart().length == 0" class="offcanvas-title fs-2" id="offcanvasScrollingLabel">Il tuo
