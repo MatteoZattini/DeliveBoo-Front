@@ -11,7 +11,8 @@ export default {
     data() {
         return {
             cart: store.getCart(),
-            myOffcanvas: document.getElementById("offcanvasScrolling"),
+            myOffcanvas: this.$refs.offCanvas,
+    
         }
     },
 
@@ -50,6 +51,17 @@ export default {
             if(this.$route.path.startsWith("/restaurant/")) {
                 console.log("questa rotta è un ristorante")
             }
+        },
+
+        handleOffcanvas() {
+            console.log("questo è il refs", this.$refs.offCanvas)
+            console.log("questo è store.rest", store.routeRestaurant)
+            if(store.routeRestaurant == true) {
+                let bsOffcanvas = new this.bootstrap.Offcanvas(this.myOffcanvas);
+                bsOffcanvas.show(),
+                console.log("sono dentro")
+            }
+            store.myOffcanvas
         }
 
     },
@@ -58,13 +70,19 @@ export default {
             return this.getTotalPrice(); // Chiamata alla funzione all'interno del computed
         },
 
+        routeHandler() {
+            return this.handleOffcanvas()
+        },
+
         
 
     },
 
     mounted() {
         // console.log(store.getCart(), 'cart');
-        this.currentRoute()
+        this.currentRoute(),
+
+        this.handleOffcanvas()
     }
 }
 </script>

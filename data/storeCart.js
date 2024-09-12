@@ -4,6 +4,7 @@ import { reactive } from "vue";
 export const store = reactive({
   //Variabili
   cart: JSON.parse(localStorage.getItem("cart")) || [],
+  routeRestaurant: false,
 
   initialOwner: JSON.parse(localStorage.getItem("initialOwner")) || null,
   currentOwner: null,

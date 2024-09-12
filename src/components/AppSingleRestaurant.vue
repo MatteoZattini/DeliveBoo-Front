@@ -15,7 +15,7 @@ export default {
         return {
             restaurant: '',
             isLoading: true,
-            offcanvas: '',
+             
         }
     },
 
@@ -29,11 +29,13 @@ export default {
             return this.$route.path;
         },
 
-        // mycurrentRoute() {
-        //     if(this.$route.path.startsWith("/restaurant/")) {
-        //         console.log("questa rotta è un ristorante")
-        //     }
-        // },
+        mycurrentRoute() {
+            if(this.$route.path.startsWith("/restaurant/")) {
+                console.log("questa rotta è un ristorante")
+                store.routeRestaurant = true
+                console.log(store.routeRestaurant)
+            }
+        },
 
 
 
@@ -50,7 +52,7 @@ export default {
 
         this.currentRoute()
 
-        // this.mycurrentRoute()
+        this.mycurrentRoute()
 
     }
 
