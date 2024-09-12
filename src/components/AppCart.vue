@@ -2,9 +2,12 @@
 import { store } from '../../data/storeCart.js';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import { EventBus } from '../../data/eventBus.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 export default {
-    name: 'AppSingleRestaurant',
+    name: 'AppCart',
 
     components: {
         store,
@@ -16,7 +19,8 @@ export default {
         return {
             cart: store.getCart(),
             visible: false,
-            store: store
+            store: store,
+            isOffCanvasOpen: false
         }
     },
 
@@ -52,6 +56,11 @@ export default {
             store.updateQuantity(itemid, quantity);
         },
 
+        openOffcanvas() {
+            const cart = document.getElementById("offcanvasScrolling");
+            cart.classList.add("show")
+        }
+
     },
     computed: {
         totalPrice() {
@@ -61,6 +70,7 @@ export default {
     },
 
     mounted() {
+        EventBus.on('openCart', this.openOffcanvas);
     }
 }
 </script>

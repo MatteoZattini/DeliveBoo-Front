@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
-import AppHeader from "./components/AppHeader.vue"
+import AppHeader from "./components/AppHeader.vue";
+import { EventBus } from '../data/eventBus';
 
 
 
@@ -10,6 +11,15 @@ export default {
 	components: {
 		AppHeader,
 
+	},
+
+	watch: {
+		$route(to) {
+      if (to.path.startsWith('/restaurant')) {
+		console.log('siamo sulla rotta singolo ristorante')
+        EventBus.emit('openCart');
+      }
+    }
 	},
 
 	data() {
@@ -23,7 +33,7 @@ export default {
 	},
 
 	mounted() {
-
+		
 	}
 }
 

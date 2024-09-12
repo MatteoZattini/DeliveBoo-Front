@@ -4,6 +4,7 @@ import { store } from '../../data/storeCart.js';
 import Skeleton from 'primevue/skeleton';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import { EventBus } from '../../data/eventBus.js';
 
 export default {
     name: 'AppSingleRestaurant',
@@ -19,7 +20,8 @@ export default {
         return {
             restaurant: '',
             isLoading: true,
-            store: store
+            store: store,
+            isOffCanvasOpen: false
         }
     },
 
@@ -31,6 +33,12 @@ export default {
             store.clearCart();
             this.handleAddToCart(dish, restaurant);
             store.confirmModal = false
+        },
+
+        openOffcanvas() {
+            const offcanvasCart = new bootstrap.Offcanvas(document.getElementById('offcanvasScrolling'));
+            console.log("offcanvas esiste", offcanvasCart); // Controlla se l'istanza è corretta
+            offcanvasCart.show();
         }
 
     },
@@ -49,6 +57,8 @@ export default {
             this.isLoading = false
         });
         console.log(store.getCart(), 'cart');
+
+        EventBus.on('openCart', this.openOffcanvas);
     }
 }
 </script>
